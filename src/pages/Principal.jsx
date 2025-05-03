@@ -8,9 +8,7 @@ export default function Principal() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('[Principal] Verificando auth...');
     if (!auth.currentUser) {
-      console.warn('[Principal] Usuário não autenticado. Redirecionando...');
       navigate('/login');
       return;
     }
@@ -22,10 +20,8 @@ export default function Principal() {
       const docRef = doc(db, 'users', uid);
       const snap = await getDoc(docRef);
       if (snap.exists()) {
-        console.log('[Principal] Dados do usuário encontrados:', snap.data());
         setUserData(snap.data());
       } else {
-        console.warn('[Principal] Nenhum dado encontrado para o usuário.');
       }
     }
 

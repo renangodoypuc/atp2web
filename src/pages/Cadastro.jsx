@@ -13,12 +13,10 @@ export default function Cadastro() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('[Cadastro] Enviando dados:', form);
   
     try {
       const userCred = await createUserWithEmailAndPassword(auth, form.email, form.password);
       const uid = userCred.user.uid;
-      console.log('[Cadastro] UID criado:', uid);
   
       await setDoc(doc(db, 'users', uid), {
         nome: form.nome,
@@ -26,11 +24,9 @@ export default function Cadastro() {
         nascimento: form.nascimento,
         uid
       });
-      console.log('[Cadastro] Dados gravados no Firestore. Redirecionando...');
       
       navigate('/login');
     } catch (err) {
-      console.error('[Cadastro] Erro ao cadastrar:', err.message);
       setError(err.message);
     }
   };
