@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import '../App.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -20,14 +21,27 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="E-mail" onChange={e => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Senha" onChange={e => setPassword(e.target.value)} required />
-        <button type="submit">Entrar</button>
+      <form className="form" onSubmit={handleSubmit}>
+        <input
+          className="input"
+          type="email"
+          placeholder="E-mail"
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <input
+          className="input"
+          type="password"
+          placeholder="Senha"
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
+        <button className="button" type="submit">Entrar</button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <Link to="/cadastro" className="link-button">Não tem login? Cadastre-se</Link>
     </div>
   );
 }

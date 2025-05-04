@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import '../App.css';
 
 export default function Cadastro() {
   const [form, setForm] = useState({ email: '', password: '', nome: '', sobrenome: '', nascimento: '' });
@@ -13,18 +14,15 @@ export default function Cadastro() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     try {
       const userCred = await createUserWithEmailAndPassword(auth, form.email, form.password);
       const uid = userCred.user.uid;
-  
       await setDoc(doc(db, 'users', uid), {
         nome: form.nome,
         sobrenome: form.sobrenome,
         nascimento: form.nascimento,
         uid
       });
-      
       navigate('/login');
     } catch (err) {
       setError(err.message);
@@ -32,10 +30,11 @@ export default function Cadastro() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Cadastro</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <input
+          className="input"
           name="email"
           type="email"
           placeholder="E-mail"
@@ -43,6 +42,7 @@ export default function Cadastro() {
           required
         />
         <input
+          className="input"
           name="password"
           type="password"
           placeholder="Senha"
@@ -50,6 +50,7 @@ export default function Cadastro() {
           required
         />
         <input
+          className="input"
           name="nome"
           type="text"
           placeholder="Nome"
@@ -57,6 +58,7 @@ export default function Cadastro() {
           required
         />
         <input
+          className="input"
           name="sobrenome"
           type="text"
           placeholder="Sobrenome"
@@ -64,14 +66,16 @@ export default function Cadastro() {
           required
         />
         <input
+          className="input"
           name="nascimento"
           type="date"
           onChange={handleChange}
           required
         />
-        <button type="submit">Cadastrar</button>
+        <button className="button" type="submit">Cadastrar</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      <button className="link-button" onClick={() => navigate('/login')}>Voltar ao Login</button>
     </div>
   );
 }
